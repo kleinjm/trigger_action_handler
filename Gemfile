@@ -65,4 +65,7 @@ end
 group :test do
   # ensure a clean state during tests
   gem 'database_cleaner'
+
+  # Make after_commit callbacks fire in tests for Rails 3+
+  gem 'test_after_commit'
 end
