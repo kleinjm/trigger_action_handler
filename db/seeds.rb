@@ -4,8 +4,8 @@ seeds = {
   "lead_types" => ['Buying', 'Selling', 'Renting', 'Other', 'Just Looking', 'Commercial', 'Buying & Selling', 'Exception', 'Agent/Broker'],
   "phone_types" => ['Home', 'Cell', 'Work', 'Fax'],
   "task_priorities" => ['Normal', 'High', 'Low'],
-  "task_statuses" => ['Open', 'In Progress', 'Completed', 'On Hold', 'Rejected', 'Canceled']
-  "crud_actions" => ['create', 'update', 'delete']
+  "task_statuses" => ['Open', 'In Progress', 'Completed', 'On Hold', 'Rejected', 'Canceled'],
+  "crud_actions" => ['create', 'update', 'destroy']
 }
 seeds.each do |klass_name, values|
   klass = klass_name.classify.constantize
