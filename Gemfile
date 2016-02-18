@@ -14,6 +14,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# HAML generator
+gem 'haml-rails'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -22,6 +25,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+# Rails Observers for watching active record transactions
+gem 'rails-observers'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -35,6 +41,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # rspec-rails is a testing framework for Rails 3.x and 4.x.
+  gem 'rspec-rails', '~> 3.0'
+  # a fixtures replacement with a straightforward definition syntax
+  gem "factory_girl_rails", "~> 4.0"
+  # pry debugger for rails server and console
+  gem 'pry-rails'
+  gem 'pry-nav'
 end
 
 group :development do
@@ -43,5 +56,13 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Guard automates various tasks by running custom rules whenever file or directories are modified.
+  gem 'guard'
+  gem "guard-rspec", require: false
 end
 
+group :test do
+  # ensure a clean state during tests
+  gem 'database_cleaner'
+end
