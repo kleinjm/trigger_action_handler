@@ -4,4 +4,6 @@ class Action < ActiveRecord::Base
 
   belongs_to :crud_action
   belongs_to :trigger
+
+  validates_presence_of :trigger, :crud_action, :klass
 end

@@ -7,6 +7,8 @@ class TriggerHandler
     @transaction = transaction
   end
 
+  # iterate through any triggers related to the item and transaction.
+  # execute the actions where all/any conditions are met
   def perform
     raise "TriggerHandler given nil item" if item.blank?
     raise "TriggerHandler given unrecognized transaction" unless CrudAction.names.include?(@transaction)

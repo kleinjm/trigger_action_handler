@@ -32,8 +32,8 @@ describe TriggerHandler do
 
       # condition
       dead_stage = create :deal_stage, name: "dead", dead: true
-      condition_pair = create :field_value_pair, field: "current_stage_id", value: dead_stage.id
-      condition = create :condition, field_value_pair: condition_pair
+      condition = create :condition
+      condition.create_field_value_pair(field: "current_stage_id", value: dead_stage.id)
 
       # condition trigger join (default operator is OR)
       create :condition_trigger_join, trigger: trigger, condition: condition
@@ -66,8 +66,8 @@ describe TriggerHandler do
       trigger = create :trigger, klass: "Showing", crud_action: create_crud
 
       # condition
-      condition_pair = create :field_value_pair, field: "agent_id", value: "nil"
-      condition = create :condition, field_value_pair: condition_pair, operator: "!="
+      condition = create :condition, operator: "!="
+      condition.create_field_value_pair(field: "agent_id", value: "nil")
 
       # condition trigger join (default operator is OR)
       create :condition_trigger_join, trigger: trigger, condition: condition
@@ -208,8 +208,8 @@ describe TriggerHandler do
       trigger = create :trigger, klass: "AgentContact", crud_action: create_crud
       
       # NOTE: This is an interesting case where we are looking at a value through a relationship
-      condition_pair = create :field_value_pair, field: "lead.agent_id", value: "nil"
-      condition = create :condition, field_value_pair: condition_pair
+      condition = create :condition
+      condition.create_field_value_pair(field: "lead.agent_id", value: "nil")
 
       # condition trigger join (default operator is OR)
       create :condition_trigger_join, trigger: trigger, condition: condition
@@ -258,10 +258,10 @@ describe TriggerHandler do
       trigger = create :trigger, klass: "Lead", crud_action: update_crud
 
       # NOTE: In this case, 2 conditions can cause this. The operator in the join is OR by default
-      condition_pair1 = create :field_value_pair, field: "lead_status_id", value: dead_status.id
-      condition1 = create :condition, field_value_pair: condition_pair1
-      condition_pair2 = create :field_value_pair, field: "lead_status_id", value: inactive_status.id
-      condition2 = create :condition, field_value_pair: condition_pair2
+      condition1 = create :condition
+      condition1.create_field_value_pair(field: "lead_status_id", value: dead_status.id)
+      condition2 = create :condition
+      condition2.create_field_value_pair(field: "lead_status_id", value: inactive_status.id)
 
       # condition trigger join (default operator is OR)
       create :condition_trigger_join, trigger: trigger, condition: condition1
