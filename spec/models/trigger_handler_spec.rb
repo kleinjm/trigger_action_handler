@@ -16,11 +16,11 @@ describe TriggerHandler do
 
   describe ".perform" do
     it "raise error on invalid record" do
-      expect{TriggerHandler.perform(nil, "create")}.to raise_error(RuntimeError)
+      expect{TriggerHandler.new(nil, "create").perform}.to raise_error(RuntimeError)
     end
     it "raise error on invalid transaction type" do
       deal = create :deal
-      expect{TriggerHandler.perform(deal, "bad")}.to raise_error(RuntimeError)
+      expect{TriggerHandler.new(deal, "bad").perform}.to raise_error(RuntimeError)
     end
 
     it "Deal is updated and new deal stage is a 'dead' stage, update tasks and event to mark as 'cancelled'" do
