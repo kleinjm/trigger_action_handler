@@ -12,7 +12,7 @@ class TriggerHandler
     raise "TriggerHandler given unrecognized transaction" unless CrudAction.names.include?(@transaction)
 
     # grab all triggers for the given type of object that occur on the given type of transaction
-    triggers = Trigger.joins(:crud_action).where(klass: item.class.name, crud_actions: { name: transaction })
+    triggers = Trigger.joins(:crud_action).where(klass: item.class.name, crud_actions: { name: @transaction })
 
     unless triggers.blank?
       # for each trigger matching this item's class
@@ -21,9 +21,7 @@ class TriggerHandler
         # see if any/all conditions match this item's state
         if ConditionTriggerJoin.meets_condtions?(trigger.condition_trigger_joins, item)
           # perform all actions associated with this trigger
-          trigger.actions.each do |action|
-            perform_crud(fetch_records(action, item), action, item)
-          end
+          trigger.actions.map{ |action| perform_crud(fetch_records(action), action) }
         end
       end
     end
@@ -37,12 +35,12 @@ class TriggerHandler
   private
 
   # return the records that match the given lookup field value
-  def self.fetch_records(action, item)
+  def fetch_records(action)
     klass = action.klass.constantize
 
     # scope the action if necessary
     unless action.lookup_field_value_pair.blank?
-      lookup_value = evaluate_value(action.lookup_field_value_pair.value, item)
+      lookup_value = TriggerHandler.evaluate_value(action.lookup_field_value_pair.value, item)
       field_segments = action.lookup_field_value_pair.field.split(".")
 
       # a syntax for doing a join within the lookup. This could be extended to handle 
@@ -57,7 +55,7 @@ class TriggerHandler
     return records
   end
 
-  def self.perform_crud(records, action, item)
+  def perform_crud(records, action)
     # build a hash so that the transaction is done in one db call
     field_pairs = FieldValuePair.hashify(action.change_field_value_pairs, item)
     case action.crud_action.name
