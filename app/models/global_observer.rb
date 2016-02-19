@@ -2,7 +2,7 @@ class GlobalObserver < ActiveRecord::Observer
   observe ActiveRecord::Base
 
   def after_commit(record)
-    TriggerHandler.perform(record, transaction_type(record))
+    TriggerHandler.new(record, transaction_type(record)).perform
   end
 
   private

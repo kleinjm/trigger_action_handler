@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :condition do
-    trigger{ create :trigger }
     operator "=="
     
     after(:create) do |condition|

@@ -52,8 +52,15 @@ ActiveRecord::Schema.define(version: 20160217235914) do
     t.string   "license_number"
   end
 
-  create_table "conditions", force: :cascade do |t|
+  create_table "condition_trigger_joins", force: :cascade do |t|
     t.integer  "trigger_id"
+    t.integer  "condition_id"
+    t.string   "operator",     default: "||"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "conditions", force: :cascade do |t|
     t.string   "operator"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -112,6 +119,7 @@ ActiveRecord::Schema.define(version: 20160217235914) do
   create_table "field_value_pairs", force: :cascade do |t|
     t.integer "owner_id"
     t.string  "owner_type"
+    t.string  "identifier"
     t.string  "field"
     t.string  "value"
   end

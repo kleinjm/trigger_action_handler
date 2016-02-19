@@ -12,5 +12,5 @@ class Lead < ActiveRecord::Base
   has_many :events
   has_many :tasks
   has_many :marketing_list_leads
-  has_many :marketing_lists, :through => :marketing_list_lead
+  has_many :marketing_lists, :through => :marketing_list_leads
 end
