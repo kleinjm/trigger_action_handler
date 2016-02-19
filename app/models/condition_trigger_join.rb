@@ -2,9 +2,11 @@ class ConditionTriggerJoin < ActiveRecord::Base
   belongs_to :trigger
   belongs_to :condition
 
-  validates_presence_of :trigger_id, :condition_id
+  validates_presence_of :trigger_id, :condition_id, :operator
 
   OPERATORS = ["&&", "||"]
+
+  validates :operator, inclusion: { in: OPERATORS, message: "Invalid operator" }
 
   # based on the join operator and each condition's evaluation, return a boolean specifying if all condtions are met
   def self.meets_condtions?(joins, item)
