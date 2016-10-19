@@ -1,13 +1,12 @@
 class Condition < ActiveRecord::Base
-
   has_many :condition_trigger_joins
   has_many :triggers, through: :condition_trigger_joins
 
   has_one :field_value_pair, as: :owner, dependent: :destroy
 
   # basic ruby comparison operators
-  OPERATORS = ["==","!=",">","<",">=","<=","<=>","==="]
+  OPERATORS = %w(== , != , > , < , >= , <= , <=> , ===).freeze
 
   validates_presence_of :operator
-  validates :operator, inclusion: { in: OPERATORS, message: "Invalid operator" }
+  validates :operator, inclusion: { in: OPERATORS, message: 'Invalid operator' }
 end

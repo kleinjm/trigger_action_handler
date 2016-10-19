@@ -8,11 +8,11 @@ class GlobalObserver < ActiveRecord::Observer
   private
 
   # return the transaction type that occured
-  # NOTE: a bit funkey because transaction_include_any_action? is a 
+  # NOTE: a bit funkey because transaction_include_any_action? is a
   # private method on ActiveRecord::Transactions and takes an array
   def transaction_type(record)
-    return "create" if record.send(:transaction_include_any_action?, [:create])
-    return "update" if record.send(:transaction_include_any_action?, [:update])
-    return "destroy" if record.send(:transaction_include_any_action?, [:destroy])
+    return 'create' if record.send :transaction_include_any_action?, [:create]
+    return 'update' if record.send :transaction_include_any_action?, [:update]
+    return 'destroy' if record.send :transaction_include_any_action?, [:destroy]
   end
 end
